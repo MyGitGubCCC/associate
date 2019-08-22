@@ -1,0 +1,2 @@
+document.write('<script type="text/javascript" src="jquery-easyui-1.7.0/jquery.min.js"></script>');
+document.write('<script type="text/javascript" src="jquery-easyui-1.7.0/jquery.easyui.min.js"></script>');

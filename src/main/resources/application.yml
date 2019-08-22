@@ -1,0 +1,27 @@
+#slf4j日志配置
+#logging:
+#  pattern:
+#    console: "%d - %msg%n"
+#  file: D:\IdeaProjects\associate
+#  level: debug
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: 123456
+    #加入时区serverTimezone=UTC，不然会报错
+    url: jdbc:mysql://127.0.0.1:3306/associate?characterEncoding=utf-8&useSSL=true&serverTimezone=UTC
+  jpa:
+    show-sql: true
+    #当前数据库引擎InnoDB
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    #关闭freemarker缓存
+  freemarker:
+    cache: false
+  devtools:
+    restart:
+      enabled: true #开启热部署
+      additional-paths: src/main/java #重启目录
+server:
+  servlet:
+    context-path: /associate
