@@ -1,5 +1,6 @@
 package edu.hsd.associate.service;
 
+import edu.hsd.associate.dto.AssociateDTO;
 import edu.hsd.associate.vo.AssociateFieldResultVo;
 import edu.hsd.associate.vo.AssociateFieldVo;
 import edu.hsd.associate.vo.AssociateWordVo;
@@ -22,7 +23,9 @@ public interface AssociateService {
      */
     Page<AssociateWordVo> findAllAssociateWord(Pageable pageable, String associateWord, String associatePos);
 
-    Page<AssociateFieldVo> findAssociateFieldByAssociate(Pageable pageable, String associateWord);
+    Page<AssociateFieldVo> findAssociateField(Pageable pageable, AssociateDTO associateDTO);
+
+    List<AssociateFieldVo> findAssociateField(AssociateDTO associateDTO);
 
     AssociateFieldResultVo findAssociateFieldResult(String associateWord);
 

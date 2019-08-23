@@ -31,7 +31,7 @@ public class PsqServiceImpl implements PsqService {
     private PsqRepository psqRepository;
 
     @Override
-    public Page<PsqVo> findAll(Pageable pageable, Psq psq) {
+    public Page<PsqVo> findAllPage(Pageable pageable, Psq psq) {
         //psqName模糊查询
         ExampleMatcher matcher = ExampleMatcher.matching().withMatcher("psqName",
                 ExampleMatcher.GenericPropertyMatchers.contains());
@@ -40,6 +40,11 @@ public class PsqServiceImpl implements PsqService {
         List<PsqVo> psqVoList = ConvertUtils.Psqs2PsqVos(psqPage.getContent());
         Page<PsqVo> psqVoPage = new PageImpl<>(psqVoList, psqPage.getPageable(),psqPage.getTotalElements());
         return psqVoPage;
+    }
+
+    @Override
+    public List<Psq> findAll() {
+        return psqRepository.findAll();
     }
 
     @Override

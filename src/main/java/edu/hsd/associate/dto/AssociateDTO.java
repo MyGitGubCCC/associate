@@ -1,24 +1,16 @@
-package edu.hsd.associate.dataobject;
+package edu.hsd.associate.dto;
 
 import lombok.Data;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import java.util.Date;
+import org.hibernate.annotations.Parameter;
 
 /**
  * @author 曹成成
- * @date 2019/8/21 8:36
+ * @date 2019/8/23 9:21
  */
-@Entity
 @Data
-public class Associate {
+public class AssociateDTO {
 
-    /*id*/
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) //自增长主键
+
     private Integer associateId;
     /*联想词*/
     private String associateWord;
@@ -32,8 +24,10 @@ public class Associate {
     private Integer professionId;
     /*年级*/
     private Integer gradeId;
-    /*年龄*/
-    private Integer age;
+    /*年龄下限*/
+    private Integer age1;
+    /*年龄上限*/
+    private Integer age2;
     /*性别*/
     private Integer sex;
     /*民族*/
@@ -42,6 +36,10 @@ public class Associate {
     private Integer originAreaId;
     /*现居地*/
     private Integer presentAreaId;
+    /*生源地*/
+    private Integer originLocationId;
+    /*现居地*/
+    private Integer presentLocationId;
     /*联系词词性*/
     private String associatePos;
     /*反应词词性*/
@@ -49,6 +47,5 @@ public class Associate {
     /*问卷id*/
     private Integer psqId;
     /*答题时间*/
-    private Date answerTime;
-
+    //private Date answerTime;
 }

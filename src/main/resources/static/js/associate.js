@@ -26,7 +26,8 @@ $(function(){
             //alert(row.associateWord);
             $('#dg2').datagrid("load", {"associateWord":row.associateWord});
             $('#lb').text(row.associateWord);
-
+            //清空一下搜索框
+            clearsearch2();
         }
     });
 
@@ -53,7 +54,7 @@ $(function(){
         rownumbers: true,
         singleSelect: true,
         pagination: true, //显示分页插件
-        url: '/associate/associate/outPutAssociateField',
+        url: '/associate/associate/outPutPageAssociateField',
         method: 'get',
         fitColumns : false,
         pageSize:10,
@@ -70,9 +71,15 @@ $(function(){
         ]],
         //单击联想词行事件
         onClickRow: function (index, row) {
-            //alert(row.reactionWord);
-            $('#dg2').datagrid("load", {"associateWord":row.reactionWord});
-            $('#lb').text(row.reactionWord);
+            if (row.reactionIsAssociate != 1){
+                $.messager.alert("提示", "请选择蓝色行继续生产联想场！", "warning");
+            }else {
+                //alert(row.reactionWord);
+                $('#dg2').datagrid("load", {"associateWord":row.reactionWord});
+                $('#lb').text(row.reactionWord);
+                //清空一下搜索框
+                clearsearch2();
+            }
         },
         //行样式
         rowStyler: function(index,row){
@@ -97,33 +104,63 @@ $(function(){
         var searchReactionWord = $('#searchReactionWord').val();
         var searchReactionPos = $('#searchReactionPos').val();
         var searchSchoolName = $('#searchSchoolName').val();
-        var searchProfession = $('#searchProfession').val();
+        var searchPsq = $('#searchPsq').val();
+        var searchProfession = $('#searchProfession').combotree('getValue');
         var searchJob = $('#searchJob').val();
         var searchGrade = $('#searchGrade').val();
         var searchAge1 = $('#searchAge1').val();
         var searchAge2 = $('#searchAge2').val();
         var searchSex = $('#searchSex').val();
         var searchNation = $('#searchNation').val();
-        var searchOriginArea = $('#searchOriginArea').val();
-        var searchPresentArea = $('#searchPresentArea').val();
-        var searchLocation = $('#searchLocation').val();
+        var searchOriginArea = $('#searchOriginArea').combotree('getValue');
+        var searchPresentArea = $('#searchPresentArea').combotree('getValue');
+        var searchOriginLocation = $('#searchOriginLocation').val();
+        var searchPresentLocation = $('#searchPresentLocation').val();
+        //获取H2标签中的内容
+        var searchAssociateWord = $('#lb').html();
 
-        $('#dg').datagrid("load", {
+        $('#dg2').datagrid("load", {
+            "associateWord" : searchAssociateWord,
             "reactionWord": searchReactionWord,
             "reactionPos": searchReactionPos,
             "schoolName": searchSchoolName,
-            "profession": searchProfession,
-            "job": searchJob,
-            "grade": searchGrade,
+            "psqId": searchPsq,
+            "professionId": searchProfession,
+            "jobId": searchJob,
+            "gradeId": searchGrade,
             "age1": searchAge1,
             "age2": searchAge2,
             "sex": searchSex,
-            "nation": searchNation,
-            "originArea": searchOriginArea,
-            "presentArea": searchPresentArea,
-            "location": searchLocation
+            "nationId": searchNation,
+            "originAreaId": searchOriginArea,
+            "presentAreaId": searchPresentArea,
+            "originLocationId": searchOriginLocation,
+            "presentLocationId": searchPresentLocation
         });
     });
+
+    $('#clear-btn').bind('click', function () {
+        clearsearch2();
+    })
 });
 
+function clearsearch2() {
+    $('#searchReactionWord').textbox('setValue','');
+    $('#searchReactionPos').textbox('setValue','');
+    $('#searchSchoolName').textbox('setValue','');
+    $('#searchPsq').textbox('setValue','');
+    $('#searchJob').textbox('setValue','');
+    $('#searchGrade').textbox('setValue','');
+    $('#searchAge1').textbox('setValue','');
+    $('#searchAge2').textbox('setValue','');
+    $('#searchSex').textbox('setValue','全部');
+    $('#searchNation').textbox('setValue','');
+    $('#searchOriginLocation').textbox('setValue','');
+    $('#searchPresentLocation').textbox('setValue','');
+    $('#searchProfession').combotree('setValue','');
+    $('#searchOriginArea').combotree('setValue','');
+    $('#searchPresentArea').combotree('setValue','');
+    //获取H2标签中的内容
+    //$('#lb').text('暂无联想词');
+}
 

@@ -1,6 +1,5 @@
 package edu.hsd.associate.service.impl;
 
-import edu.hsd.associate.dataobject.Language;
 import edu.hsd.associate.dataobject.Psq;
 import edu.hsd.associate.vo.PsqVo;
 import org.junit.Assert;
@@ -8,13 +7,10 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import static org.junit.Assert.*;
 
 /**
  * @author 曹成成
@@ -35,7 +31,7 @@ public class PsqServiceImplTest {
 //        psq.setLanguage(language);
         psq.setPsqName("问卷2");
         Pageable pageable = PageRequest.of(0,10);
-        Page<PsqVo> psqPage = psqService.findAll(pageable, psq);
+        Page<PsqVo> psqPage = psqService.findAllPage(pageable, psq);
         Assert.assertNotNull(psqPage);
     }
 

@@ -1,7 +1,8 @@
 package edu.hsd.associate.repository;
 
+import edu.hsd.associate.dataobject.Area;
 import edu.hsd.associate.dataobject.Associate;
-import edu.hsd.associate.dataobject.AssociateWord;
+import edu.hsd.associate.dto.AssociateDTO;
 import edu.hsd.associate.vo.AssociateFieldVo;
 import edu.hsd.associate.vo.AssociateWordVo;
 import org.junit.Assert;
@@ -16,8 +17,6 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.*;
-
 /**
  * @author 曹成成
  * @date 2019/8/21 9:04
@@ -28,6 +27,8 @@ public class AssociateRepositoryTest {
 
     @Autowired
     private AssociateRepository associateRepository;
+    @Autowired
+    private AreaRepository areaRepository;
     @Test
     public void findAllAssociateWord() {
         Pageable pageable = PageRequest.of(0,10);
@@ -52,9 +53,19 @@ public class AssociateRepositoryTest {
     }
 
     @Test
-    public void findAssociateFieldByAssociate(){
+    public void findAssociateField(){
         Pageable pageable = PageRequest.of(0,10);
-        Page<Object[]> pageObject = associateRepository.findAssociateFieldByAssociate("被子", pageable);
+        AssociateDTO associateDTO = new AssociateDTO();
+        associateDTO.setAssociateWord("成成");
+
+        List<Integer> orIds = new ArrayList<>();
+        List<Integer> preIds = new ArrayList<>();
+        List<Area> areas = areaRepository.findAll();
+        for (Area area : areas) {
+            orIds.add(area.getAreaId());
+            preIds.add(area.getAreaId());
+        }
+        Page<Object[]> pageObject = associateRepository.findAssociateField(associateDTO, orIds, preIds, pageable);
 
         //转换为AssociateFieldVo类型的page对象
         List<AssociateFieldVo> associateFieldVoList = new ArrayList<>();

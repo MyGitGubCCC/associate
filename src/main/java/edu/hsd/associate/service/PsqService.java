@@ -13,7 +13,9 @@ import java.util.List;
  */
 public interface PsqService {
 
-    Page<PsqVo> findAll(Pageable pageable, Psq searchPsq);
+    Page<PsqVo> findAllPage(Pageable pageable, Psq searchPsq);
+
+    List<Psq> findAll();
 
     Psq addPsq(Psq psq);
 

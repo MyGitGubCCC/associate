@@ -19,7 +19,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.crypto.interfaces.PBEKey;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -46,7 +45,7 @@ public class PsqController {
      * @return
      */
     @GetMapping("/psqPageList")
-    public DataGrid psqList(@RequestParam(value = "psqName",defaultValue = "")String psqName,
+    public DataGrid psqPageList(@RequestParam(value = "psqName",defaultValue = "")String psqName,
                             @RequestParam(value = "psqtypeId",defaultValue = "0")Integer psqtypeId,
                             @RequestParam(value = "languageId",defaultValue = "0")Integer languageId,
                             @RequestParam(value = "psqState", defaultValue = "-1")Integer psqState,
@@ -69,11 +68,15 @@ public class PsqController {
         }
         if (psqState != -1) psq.setPsqState(psqState);
 
-        Page<PsqVo> psqPage = psqService.findAll(pageRequest,psq);
+        Page<PsqVo> psqPage = psqService.findAllPage(pageRequest,psq);
         //封装为easyui需要的格式，总数和当前值列表
         return ConvertUtils.Page2DataGrid(psqPage);
     }
 
+    @GetMapping("/findAll")
+    public List<Psq> findAll(){
+        return psqService.findAll();
+    }
 
     @PostMapping("/addPsq")
     public MessageVo addPsg(@Valid PsqForm psqForm, BindingResult result){

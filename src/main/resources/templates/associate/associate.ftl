@@ -43,18 +43,7 @@
                     textField: 'posName',
                     limitToList:true
                     ">
-                学&nbsp;&ensp;校: <input id="searchSchoolName" class="easyui-textbox" style="width:150px"><br/>
-                学&nbsp;&ensp;科: <input id="searchProfession" class="easyui-combotree" name="searchProfession" style="width:150px;" data-options="
-                    url:'/associate/profession/treeProfession',
-                    method:'get'
-                    ">
-                职&nbsp;&ensp;业: <input id="searchJob" class="easyui-combobox" name="searchJob" style="width:150px;" data-options="
-                    url:'/associate/job/findAll',
-                    method:'get',
-                    valueField: 'jobId',
-                    textField: 'jobName',
-                    limitToList:true
-                    ">
+                学&nbsp;&ensp;校: <input id="searchSchoolName" class="easyui-textbox" style="width:150px">
                 年&nbsp;&ensp;级: <input id="searchGrade" class="easyui-combobox" name="searchGrade" style="width:150px;" data-options="
                     url:'/associate/grade/findAll',
                     method:'get',
@@ -62,40 +51,66 @@
                     textField: 'gradeName',
                     limitToList:true
                     "><br/>
-                年龄从:  <input id="searchAge1" class="easyui-numberbox" style="width:60px">
-                到<input id="searchAge2" class="easyui-numberbox" style="width:60px">岁
-                性&nbsp;&ensp;别: <select id="searchSex" class="easyui-combobox" name="searchSex" style="width:150px;">
-                            <option value="-1">全部</option>
-                            <option value="0">女</option>
-                            <option value="1">男</option>
-                        </select>
-                民&nbsp;&ensp;族: <input id="searchNation" class="easyui-combobox" name="searchNation" style="width:150px;" data-options="
-                    url:'/associate/nation/findAll',
+                问&nbsp;&ensp;卷: <input id="searchPsq" class="easyui-combobox" name="searchPsq" style="width:150px;" data-options="
+                    url:'/associate/psq/findAll',
                     method:'get',
-                    valueField: 'nationId',
-                    textField: 'nationName',
+                    valueField: 'psqId',
+                    textField: 'psqName',
                     limitToList:true
-                    "><br/>
+                    ">
+                学&nbsp;&ensp;科: <input id="searchProfession" class="easyui-combotree" name="searchProfession" style="width:150px;" data-options="
+                    url:'/associate/profession/treeProfession',
+                    method:'get'
+                    ">
                 生源地: <input id="searchOriginArea" class="easyui-combotree" name="searchOriginArea" style="width:150px;" data-options="
                     url:'/associate/area/findTreeArea',
                     method:'get',
                     valueField: 'id',
                     textField: 'text',
                     ">
+                生源地区: <input id="searchOriginLocation" class="easyui-combobox" name="searchOriginLocation" style="width:150px;" data-options="
+                    url:'/associate/location/findAll',
+                    method:'get',
+                    valueField: 'locationId',
+                    textField: 'locationName',
+                    limitToList:true
+                    "><br/>
+                年龄从:  <input id="searchAge1" class="easyui-numberbox" style="width:57px">
+                到<input id="searchAge2" class="easyui-numberbox" style="width:57px">岁
+                性&nbsp;&ensp;别: <select id="searchSex" class="easyui-combobox" name="searchSex" style="width:150px;">
+                            <option value="-1">全部</option>
+                            <option value="0">女</option>
+                            <option value="1">男</option>
+                        </select>
                 现居地: <input id="searchPresentArea" class="easyui-combotree" name="searchPresentArea" style="width:150px;" data-options="
                     url:'/associate/area/findTreeArea',
                     method:'get',
                     valueField: 'id',
                     textField: 'text',
                     ">
-                地&nbsp;&ensp;区: <input id="searchLocation" class="easyui-combobox" name="searchLocation" style="width:150px;" data-options="
+                现居地区: <input id="searchPresentLocation" class="easyui-combobox" name="searchPresentLocation" style="width:150px;" data-options="
                     url:'/associate/location/findAll',
                     method:'get',
                     valueField: 'locationId',
                     textField: 'locationName',
                     limitToList:true
+                    "><br/>
+                职&nbsp;&ensp;业: <input id="searchJob" class="easyui-combobox" name="searchJob" style="width:150px;" data-options="
+                    url:'/associate/job/findAll',
+                    method:'get',
+                    valueField: 'jobId',
+                    textField: 'jobName',
+                    limitToList:true
                     ">
-                <a id="search-btn2" href="#" class="easyui-linkbutton" iconCls="icon-search">搜索</a>
+                民&nbsp;&ensp;族: <input id="searchNation" class="easyui-combobox" name="searchNation" style="width:150px;" data-options="
+                    url:'/associate/nation/findAll',
+                    method:'get',
+                    valueField: 'nationId',
+                    textField: 'nationName',
+                    limitToList:true
+                    ">
+                <a id="search-btn2" href="#" class="easyui-linkbutton" style="width:200px;" iconCls="icon-search">搜索</a>
+                <a id="clear-btn" href="#" class="easyui-linkbutton" style="width:200px;" iconCls="icon-no">清空</a>
             </div>
             <H2 id="lb" style="color: #00bbee">暂无联想词</H2>
             <#--联想场datagrid-->
