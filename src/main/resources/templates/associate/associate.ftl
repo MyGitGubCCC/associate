@@ -109,13 +109,20 @@
                     textField: 'nationName',
                     limitToList:true
                     ">
-                <a id="search-btn2" href="#" class="easyui-linkbutton" style="width:200px;" iconCls="icon-search">搜索</a>
-                <a id="clear-btn" href="#" class="easyui-linkbutton" style="width:200px;" iconCls="icon-no">清空</a>
+                <a id="search-btn2" href="#" class="easyui-linkbutton" style="width:140px;" iconCls="icon-search">搜索</a>
+                <a id="clear-btn" href="#" class="easyui-linkbutton" style="width:140px;" iconCls="icon-no">清空</a>
+                <a id="associate-btn" href="#" class="easyui-linkbutton" style="width:140px;" iconCls="icon-print">总联想场</a>
             </div>
             <H2 id="lb" style="color: #00bbee">暂无联想词</H2>
             <#--联想场datagrid-->
             <table id="dg2" title="联想场，点击蓝色背景反应词可继续获取联想词" style="width:532px;height:453px"></table>
         </div>
+    </div>
+
+    <div id="dlg" class="easyui-dialog" title="总联想场" data-options="closed: true,iconCls:'icon-ok'" style="width:500px;height:300px;padding:10px">
+        <p id="firstFiveField" style="color: #ff0000;"></p>
+        <p id="laterField"></p>
+        <b><p id="resultStatistical"></p></b>
     </div>
 </body>
 </html>

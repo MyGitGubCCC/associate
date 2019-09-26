@@ -89,4 +89,6 @@ public class AssociateRepositoryTest {
 
         Assert.assertNotNull(associateFieldVoPage);
     }
+
+
 }

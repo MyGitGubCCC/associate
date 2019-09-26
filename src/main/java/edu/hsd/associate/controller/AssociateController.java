@@ -3,6 +3,7 @@ package edu.hsd.associate.controller;
 import edu.hsd.associate.dto.AssociateDTO;
 import edu.hsd.associate.service.AssociateService;
 import edu.hsd.associate.utils.ConvertUtils;
+import edu.hsd.associate.vo.AssociateFieldResultVo;
 import edu.hsd.associate.vo.AssociateFieldVo;
 import edu.hsd.associate.vo.AssociateWordVo;
 import edu.hsd.associate.vo.DataGrid;
@@ -10,8 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 /**
  * @author 曹成成
@@ -61,10 +60,10 @@ public class AssociateController {
      * @return
      */
     @GetMapping("/outPutAssociateField")
-    public List<AssociateFieldVo> outPutAssociateField(AssociateDTO associateDTO){
+    public AssociateFieldResultVo outPutAssociateField(AssociateDTO associateDTO){
         defaultAssociate(associateDTO);
-        List<AssociateFieldVo> associateFieldVoPage = associateService.findAssociateField(associateDTO);
-        return associateFieldVoPage;
+        AssociateFieldResultVo associateFieldResultVo = associateService.findAssociateField(associateDTO);
+        return associateFieldResultVo;
     }
 
     private void defaultAssociate(AssociateDTO associateDTO) {

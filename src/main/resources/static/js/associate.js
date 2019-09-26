@@ -100,7 +100,6 @@ $(function(){
 
     /*联想场点击查询*/
     $('#search-btn2').bind('click', function(){
-        //var sno = $("input[name='sno']").val();
         var searchReactionWord = $('#searchReactionWord').val();
         var searchReactionPos = $('#searchReactionPos').val();
         var searchSchoolName = $('#searchSchoolName').val();
@@ -139,11 +138,109 @@ $(function(){
         });
     });
 
+    //清空按钮
     $('#clear-btn').bind('click', function () {
         clearsearch2();
-    })
+    });
+
+    /**
+     * 总联想场按钮点击事件
+     */
+    $('#associate-btn').bind('click', function () {
+        //首先获取搜索搜索框内容
+        var searchReactionWord = $('#searchReactionWord').val();
+        var searchReactionPos = $('#searchReactionPos').val();
+        var searchSchoolName = $('#searchSchoolName').val();
+        var searchPsq = $('#searchPsq').val();
+        var searchProfession = $('#searchProfession').combotree('getValue');
+        var searchJob = $('#searchJob').val();
+        var searchGrade = $('#searchGrade').val();
+        var searchAge1 = $('#searchAge1').val();
+        var searchAge2 = $('#searchAge2').val();
+        var searchSex = $('#searchSex').val();
+        var searchNation = $('#searchNation').val();
+        var searchOriginArea = $('#searchOriginArea').combotree('getValue');
+        var searchPresentArea = $('#searchPresentArea').combotree('getValue');
+        var searchOriginLocation = $('#searchOriginLocation').val();
+        var searchPresentLocation = $('#searchPresentLocation').val();
+        //获取H2标签中的内容
+        var searchAssociateWord = $('#lb').html();
+
+        //提交
+        $.ajax({
+            type: "get",
+            async: false,
+            url: "/associate/associate/outPutAssociateField",
+            data: {
+                "associateWord" : searchAssociateWord,
+                "reactionWord": searchReactionWord,
+                "reactionPos": searchReactionPos,
+                "schoolName": searchSchoolName,
+                "psqId": searchPsq,
+                "professionId": searchProfession,
+                "jobId": searchJob,
+                "gradeId": searchGrade,
+                "age1": searchAge1,
+                "age2": searchAge2,
+                "sex": searchSex,
+                "nationId": searchNation,
+                "originAreaId": searchOriginArea,
+                "presentAreaId": searchPresentArea,
+                "originLocationId": searchOriginLocation,
+                "presentLocationId": searchPresentLocation
+            },
+            success: function (data) {
+                var resultStatistical = data.reactionNumber + "+" + data.differentReactionNumber
+                    + "+" + data.emptyReactionNumber + "+" + data.oneReactionNumber;
+                data1 = data.associateFieldVoList;
+                //var data = eval('(' + data + ')'); //这里不用转为JavaScript对象，本来就是，ajax提交的
+                var firstFiveField = "前五个: ";
+                var laterField = "后面的: ";
+                var n = 0;
+                for (var i = 0; i < data1.length;i++) {
+                    if (n <= 5){
+                        firstFiveField += data1[i].reactionWord;
+                        firstFiveField += '(';
+                        firstFiveField += data1[i].reactionPos;
+                        firstFiveField += ')';
+                        if (i < data1.length - 1){
+                            if (data1[i].reactionWordNumber == data1[i+1].reactionWordNumber){
+                                firstFiveField += ',';
+                            } else {
+                                firstFiveField += data1[i].reactionWordNumber + ';';
+                                n ++;
+                            }
+                        }else {
+                            firstFiveField += data1[i].reactionWordNumber + ';';
+                        }
+                    } else {
+                        laterField += data1[i].reactionWord;
+                        laterField += '(';
+                        laterField += data1[i].reactionPos;
+                        laterField += ')';
+                        if (i < data1.length - 1){
+                            if (data1[i].reactionWordNumber == data1[i+1].reactionWordNumber){
+                                laterField += ',';
+                            } else {
+                                laterField += data1[i].reactionWordNumber + ';';
+                                n ++;
+                            }
+                        }else {
+                            laterField += data1[i].reactionWordNumber + ';';
+                        }
+                    }
+                }
+                $('#firstFiveField').text(firstFiveField);
+                $('#laterField').text(laterField);
+                $('#resultStatistical').text('('+resultStatistical+')');
+                $('#dlg').dialog('open');
+
+            }
+        });
+    });
 });
 
+//清空搜索框
 function clearsearch2() {
     $('#searchReactionWord').textbox('setValue','');
     $('#searchReactionPos').textbox('setValue','');

@@ -99,7 +99,7 @@ var toolbar = [{
         }else{
             var temID="";
             //批量获取选中行的评估模板ID
-            for (i = 0; i < selRow.length;i++) {
+            for (var i = 0; i < selRow.length;i++) {
                 if (temID =="") {
                     temID = selRow[i].associateWordId;
                 } else {

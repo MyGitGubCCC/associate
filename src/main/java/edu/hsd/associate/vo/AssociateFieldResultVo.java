@@ -2,6 +2,8 @@ package edu.hsd.associate.vo;
 
 import lombok.Data;
 
+import java.util.List;
+
 /**
  * @author 曹成成
  * @date 2019/8/21 8:24
@@ -11,12 +13,14 @@ public class AssociateFieldResultVo {
 
     private String associateWord;
 
-    private Integer reactionNumber;
+    private long reactionNumber;
 
-    private Integer differentReactionNumber;
+    private long differentReactionNumber;
 
-    private Integer emptyReactionNumber;
+    private long emptyReactionNumber;
 
-    private Integer oneReactionNumber;
+    private long oneReactionNumber;
+
+    private List<AssociateFieldVo> associateFieldVoList;
 
 }

@@ -7,8 +7,6 @@ import edu.hsd.associate.vo.AssociateWordVo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import java.util.List;
-
 /**
  * @author 曹成成
  * @date 2019/8/20 20:10
@@ -25,8 +23,6 @@ public interface AssociateService {
 
     Page<AssociateFieldVo> findAssociateField(Pageable pageable, AssociateDTO associateDTO);
 
-    List<AssociateFieldVo> findAssociateField(AssociateDTO associateDTO);
-
-    AssociateFieldResultVo findAssociateFieldResult(String associateWord);
+    AssociateFieldResultVo findAssociateField(AssociateDTO associateDTO);
 
 }

@@ -103,7 +103,7 @@ public class AssociateServiceImpl implements AssociateService {
     }
 
     @Override
-    public List<AssociateFieldVo> findAssociateField(AssociateDTO associateDTO) {
+    public AssociateFieldResultVo findAssociateField(AssociateDTO associateDTO) {
         //生源地和现居地地址处理，默认全有
         List<Integer> orIds = new ArrayList<>();
         List<Integer> preIds = new ArrayList<>();
@@ -120,9 +120,47 @@ public class AssociateServiceImpl implements AssociateService {
 
         preIds = getAreaIds(preIds, areaIdForPreLocation, associateDTO.getPresentAreaId(), associateDTO.getPresentLocationId());
 
-        List<Object[]> objectLsit = associateRepository.findAssociateField(associateDTO, orIds, preIds);
+        //1: 包含空字符串（全部），0: 不包含
+        int containEmpty = 0;
+        List<Object[]> objectList = associateRepository.findAssociateField(associateDTO, orIds, preIds, containEmpty);
+        List<AssociateFieldVo> associateFieldVos = convertAssociateFieldVos(objectList);
+
+        containEmpty = 1;
+        List<Object[]> objectList2 = associateRepository.findAssociateField(associateDTO, orIds, preIds, containEmpty);
+        List<AssociateFieldVo> associateFieldVos2 = convertAssociateFieldVos(objectList2);
+
+        //反应词总数
+        long reactionNumber = 0;
+        for (AssociateFieldVo associateFieldVo : associateFieldVos2) {
+            reactionNumber += associateFieldVo.getReactionWordNumber().intValue();
+        }
+
+        //不同反应词个数
+        long differentReactionNumber = associateFieldVos2.size();
+        //反应词为空的个数
+        long emptyReactionNumber = 0;
+        for (AssociateFieldVo associateFieldVo : associateFieldVos2) {
+            if (associateFieldVo.getReactionWord() == null || associateFieldVo.getReactionWord().equals("")){
+                emptyReactionNumber += associateFieldVo.getReactionWordNumber().intValue();
+            }
+        }
+        long oneReactionNumber = 0;
+        for (AssociateFieldVo associateFieldVo : associateFieldVos) {
+            if (1 == associateFieldVo.getReactionWordNumber().intValue()){
+                oneReactionNumber ++;
+            }
+        }
+
+        //在封装成联想场结果对象
+        AssociateFieldResultVo associateFieldResultVo = new AssociateFieldResultVo();
+        associateFieldResultVo.setAssociateFieldVoList(associateFieldVos);
+        associateFieldResultVo.setReactionNumber(reactionNumber);
+        associateFieldResultVo.setDifferentReactionNumber(differentReactionNumber);
+        associateFieldResultVo.setEmptyReactionNumber(emptyReactionNumber);
+        associateFieldResultVo.setOneReactionNumber(oneReactionNumber);
         //转换为AssociateFieldVo类型的page对象
-        return convertAssociateFieldVos(objectLsit);
+        //todo 这里应该吧总的信息封装进去
+        return associateFieldResultVo;
     }
 
     private List<AssociateFieldVo> convertAssociateFieldVos(List<Object[]> objectLsit) {
@@ -158,8 +196,4 @@ public class AssociateServiceImpl implements AssociateService {
         return ids;
     }
 
-    @Override
-    public AssociateFieldResultVo findAssociateFieldResult(String associateWord) {
-        return null;
-    }
 }

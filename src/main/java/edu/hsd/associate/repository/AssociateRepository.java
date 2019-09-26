@@ -3,6 +3,7 @@ package edu.hsd.associate.repository;
 import edu.hsd.associate.dataobject.Associate;
 import edu.hsd.associate.dto.AssociateDTO;
 import edu.hsd.associate.vo.AssociateWordVo;
+import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -62,13 +63,17 @@ public interface AssociateRepository extends JpaRepository<Associate, Integer> {
                                       Pageable pageable);
 
     /**
-     * 根据联想词分页查出联想场
-     * @param associateDTO
+     * 根据联想词查出总的联想场
+     * @param associateDTO 查询条件
+     * @param orIds 生源地id集合
+     * @param preIds 现居地id集合
+     * @param containEmpty 1: 包含空，0: 不包含空
      * @return
      */
     @Query(value = "select associate.associate_word, associate.reaction_word,  associate.associate_pos, count(*) c" +
             " from profession, associate" +
-            " where associate.associate_word = :#{#a.associateWord} and associate.reaction_word != ''" +
+            " where associate.associate_word = :#{#a.associateWord}" +
+            " and if(:#{#c} !=1, associate.reaction_word != '', 1=1)" +
             " and if(:#{#a.reactionWord} !='', associate.reaction_word like concat('%',:#{#a.reactionWord},'%'),1=1)" +
             " and if(:#{#a.reactionPos} !='', associate.reaction_pos = :#{#a.reactionPos},1=1)" +
             " and if(:#{#a.schoolName} !='', associate.school_name  like concat('%',:#{#a.schoolName},'%'),1=1)" +
@@ -87,6 +92,8 @@ public interface AssociateRepository extends JpaRepository<Associate, Integer> {
             " ORDER BY c desc, convert(associate.reaction_word using gbk) asc",
             nativeQuery = true)
     List<Object[]> findAssociateField(@Param("a") AssociateDTO associateDTO,
-                                                 @Param("orIds") List<Integer> orIds,
-                                                 @Param("preIds") List<Integer> preIds);
+                                      @Param("orIds") List<Integer> orIds,
+                                      @Param("preIds") List<Integer> preIds,
+                                      @Param("c") int containEmpty);
+
 }
